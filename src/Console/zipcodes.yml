@@ -1,0 +1,16 @@
+zipcodes:
+  -
+    id:
+      csv: "2"
+    city_id:
+      csv: "1"
+      func: setCityId
+    code:
+      csv: "3"
+    name:
+      csv: "9"
+      func: setName
+    kana:
+      csv: "6"
+      func: setKana
+
