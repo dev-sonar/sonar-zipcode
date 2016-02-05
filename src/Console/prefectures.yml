@@ -1,0 +1,12 @@
+prefectures:
+  -
+    id:
+      csv: "1"
+      func: "setPrefectureId"
+    name:
+      csv: "7"
+      func: "setName"
+    kana:
+      csv: "4"
+      func: "setKana"
+

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateZipcodesTable extends Migration
+class CreatePrefecturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,10 @@ class CreateZipcodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('zipcodes', function (Blueprint $table) {
-            $table->char('id',9)->unique();
-            $table->char('city_id',5);
-            $table->char('code',7);
-            $table->char('name',64);
-            $table->char('kana',128);
+        Schema::create('prefectures', function (Blueprint $table) {
+            $table->char('id',2)->unique();
+            $table->char('name',20);
+            $table->char('kana',40);
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
             $table->dateTime('deleted_at');
@@ -31,6 +29,6 @@ class CreateZipcodesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('zipcodes');
+        Schema::drop('prefectures');
     }
 }

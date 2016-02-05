@@ -8,6 +8,8 @@ class ZipcodeServiceProvider extends ServiceProvider
 {
     protected $commands = [
         'Sonar\Zipcode\Console\ZipcodeTableCommand',
+        'Sonar\Zipcode\Console\ZipcodePrefectureTableCommand',
+        'Sonar\Zipcode\Console\ZipcodeCityTableCommand',
         'Sonar\Zipcode\Console\ZipcodeImportCommand',
     ];
 

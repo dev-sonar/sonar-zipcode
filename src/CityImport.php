@@ -4,65 +4,31 @@ namespace Sonar\Zipcode;
 use Sonar\Common\Imports\AbstractImport;
 use Sonar\Common\Imports\CsvReaderTrait;
 
-use Sonar\Zipcode\EloquentModels\Zipcode;
+use Sonar\Zipcode\EloquentModels\City;
 
-class ZipcodeImport extends AbstractImport
+class CityImport extends AbstractImport
 {
     use CsvReaderTrait;
 
-    private $is_prefecture;
-    private $is_city;
-
-    public function __construct(Zipcode $zipcode,PrefectureImport $prefecture_import,CityImport $city_import)
+    public function __construct(City $city)
     {
         parent::__construct();
-
-        $this->zipcode = $zipcode;
-        $this->prefecture_import = $prefecture_import;
-        $this->city_import = $city_import;
-
-        $this->is_prefecture = false;
-        $this->is_city = false;
-    }
-    public function setPrefectureConfig($config)
-    {
-        $this->prefecture_import->setConfig($config);
-    }
-    public function setCityConfig($config)
-    {
-        $this->city_import->setConfig($config);
-    }
-    public function setIsPrefecture($bool)
-    {
-        $this->is_prefecture = $bool ? true : false; 
-    }
-
-    public function setIsCity($bool)
-    {
-        $this->is_city = $bool ? true : false; 
+        $this->city = $city;
     }
 
     public function csvRecord(array $csv)
     {
         if ( count($csv) <= 14 ) return;
-        if ( is_numeric($csv[1]) === false ) return;
+        if ( is_numeric($csv[0]) === false ) return;
 
-        if ( $this->is_prefecture ) {
-            $this->prefecture_import->csvRecord($csv);
-        }
-        if ( $this->is_city ) {
-            $this->city_import->csvRecord($csv);
-        }
-
-        $model = $this->zipcode->findOrNew(trim($csv[1]));
+        $model = $this->city->findOrNew(trim($csv[0])+0);
         $models = [
-            'zipcodes' => [
+            'cities' => [
                 $model,
             ]
         ];
         $this->setModels($models,$csv);
         unset($models);
-
 
         return true;
     }

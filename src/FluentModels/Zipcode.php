@@ -19,4 +19,14 @@ class Zipcode
             ->orderBy('id','asc')
             ->get();
     }
+    public function getListByCode($code)
+    {
+        if ( ! $code ) return [];
+
+        return $this->builder->from('zipcodes')->select(['id','code','name','kana'])
+            ->whereNull('deleted_at')
+            ->where('code','=',str_replace("-","",$code))
+            ->orderBy('id','asc')
+            ->get();
+    }
 }

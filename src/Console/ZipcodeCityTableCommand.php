@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
 use Illuminate\Filesystem\Filesystem;
 
-class ZipcodeTableCommand extends Command
+class ZipcodeCityTableCommand extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'zipcode:table';
+    protected $name = 'zipcode:city_table';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a migration for the zipcode database table';
+    protected $description = 'Create a migration for the city database table';
 
     /**
      * The filesystem instance.
@@ -58,7 +58,7 @@ class ZipcodeTableCommand extends Command
     {
         $fullPath = $this->createBaseMigration();
 
-        $this->files->put($fullPath, $this->files->get(__DIR__.'/stubs/zipcodes.stub'));
+        $this->files->put($fullPath, $this->files->get(__DIR__.'/stubs/cities.stub'));
 
 //        $this->info('Migration created successfully!');
 
@@ -72,7 +72,7 @@ class ZipcodeTableCommand extends Command
      */
     protected function createBaseMigration()
     {
-        $name = 'create_zipcodes_table';
+        $name = 'create_cities_table';
 
         $path = $this->laravel->databasePath().'/migrations';
 

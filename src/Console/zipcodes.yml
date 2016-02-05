@@ -2,15 +2,30 @@ zipcodes:
   -
     id:
       csv: "2"
+    prefecture_id:
+      csv: "1"
+      func: "setPrefectureId"
     city_id:
       csv: "1"
-      func: setCityId
+      func: "setCityId"
     code:
       csv: "3"
+    prefecture_name:
+      csv: "7"
+      func: "setName"
+    city_name:
+      csv: "8"
+      func: "setName"
     name:
       csv: "9"
-      func: setName
+      func: "setName"
+    prefecture_kana:
+      csv: "4"
+      func: "setKana"
+    city_kana:
+      csv: "5"
+      func: "setKana"
     kana:
       csv: "6"
-      func: setKana
+      func: "setKana"
 

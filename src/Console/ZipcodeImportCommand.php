@@ -1,7 +1,6 @@
 <?php
 
 namespace Sonar\Zipcode\Console;
-namespace Sonar\Zipcode\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -9,6 +8,9 @@ use Chumper\Zipper\Zipper;
 use Ixudra\Curl\Builder as Curl;
 
 use Sonar\Zipcode\ZipcodeImport;
+use Symfony\Component\Console\Input\InputOption;
+
+
 use Sonar\Zipcode\ZipcodeTransfer;
 
 class ZipcodeImportCommand extends Command
@@ -20,7 +22,10 @@ class ZipcodeImportCommand extends Command
      *
      * @var string
      */
+//    protected $signature = 'zipcode:import {--add-prefecture : add import prefecture table.} {--add-city : add import city table.}';
     protected $name = 'zipcode:import';
+
+
 
     /**
      * The console command description.
@@ -32,7 +37,7 @@ class ZipcodeImportCommand extends Command
     protected $import;
     protected $trasfer;
 
-    public function __construct(ZipcodeImport $import,ZipcodeTransfer $transfer,Zipper $zipper,Curl $curl,FileSystem $file)
+    public function __construct(ZipcodeImport $import,ZipcodeTransfer $transfer,Zipper $zipper,Curl $curl,Filesystem $file)
     {
         parent::__construct();
 
@@ -67,6 +72,24 @@ class ZipcodeImportCommand extends Command
         $config_file = __DIR__ . '/zipcodes.yml';
         $this->import->setConfig($config_file);
 
+        if ( $this->option('add-prefecture') ) {
+            $prefecture_config_file = __DIR__ . '/prefectures.yml';
+            $this->import->setPrefectureConfig($prefecture_config_file);
+            $this->import->setIsPrefecture(true);
+        }
+        if ( $this->option('add-city') ) {
+            $city_config_file = __DIR__ . '/cities.yml';
+            $this->import->setCityConfig($city_config_file);
+            $this->import->setIsCity(true);
+        }
+
         $this->import->csvRead(storage_path($path . '/ken_all.csv.new'));
+    }
+    public function getOptions()
+    {
+        return [
+                ['add-prefecture', null, InputOption::VALUE_OPTIONAL, 'add import prefecture table.', null],
+                ['add-city', null, InputOption::VALUE_OPTIONAL, 'add import city table.', null],
+        ];
     }
 }
