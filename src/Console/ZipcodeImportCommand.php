@@ -22,8 +22,8 @@ class ZipcodeImportCommand extends Command
      *
      * @var string
      */
-//    protected $signature = 'zipcode:import {--add-prefecture : add import prefecture table.} {--add-city : add import city table.}';
-    protected $name = 'zipcode:import';
+    protected $signature = 'zipcode:import {--add-prefecture : add import prefecture table.} {--add-city : add import city table.}';
+//    protected $name = 'zipcode:import';
 
 
 
@@ -85,6 +85,7 @@ class ZipcodeImportCommand extends Command
 
         $this->import->csvRead(storage_path($path . '/ken_all.csv.new'));
     }
+/*
     public function getOptions()
     {
         return [
@@ -92,4 +93,5 @@ class ZipcodeImportCommand extends Command
                 ['add-city', null, InputOption::VALUE_OPTIONAL, 'add import city table.', null],
         ];
     }
+*/
 }
