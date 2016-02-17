@@ -17,8 +17,8 @@ class CreateCitiesTable extends Migration
             $table->char('prefecture_id',2);
             $table->char('name',30);
             $table->char('kana',60);
-            $table->smallint('is_working');
-            $table->int('sort_by');
+            $table->smallInteger('is_working');
+            $table->integer('sort_by');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
             $table->dateTime('deleted_at');
