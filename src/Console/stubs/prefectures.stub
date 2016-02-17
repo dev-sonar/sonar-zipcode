@@ -16,6 +16,8 @@ class CreatePrefecturesTable extends Migration
             $table->char('id',2)->unique();
             $table->char('name',20);
             $table->char('kana',40);
+            $table->smallint('is_working');
+            $table->int('sort_by');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
             $table->dateTime('deleted_at');
