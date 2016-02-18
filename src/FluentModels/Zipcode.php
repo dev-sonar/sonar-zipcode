@@ -1,11 +1,11 @@
 <?php
 namespace Sonar\Zipcode\FluentModels;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Connection;
 
 class Zipcode
 {
-    public function __construct(Builder $builder)
+    public function __construct(Connection $builder)
     {
         $this->builder = $builder;
     }
@@ -13,7 +13,7 @@ class Zipcode
     {
         if ( ! $city_id ) return [];
 
-        return $this->builder->from('zipcodes')->select(['id','code','name','kana'])
+        return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
             ->whereNull('deleted_at')
             ->where('city_id','=',$city_id)
             ->orderBy('id','asc')
@@ -23,7 +23,7 @@ class Zipcode
     {
         if ( ! $code ) return [];
 
-        return $this->builder->from('zipcodes')->select(['id','code','name','kana'])
+        return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
             ->whereNull('deleted_at')
             ->where('code','=',str_replace("-","",$code))
             ->orderBy('id','asc')
