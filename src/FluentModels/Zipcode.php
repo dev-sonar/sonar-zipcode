@@ -17,10 +17,10 @@ class Zipcode
             return [];
         }
 
-        return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
+        return $this->builder->table('zipcodes')->select(['id', 'code', 'prefecture_id', 'prefecture_name', 'city_id', 'city_name', 'name'])
             ->whereNull('deleted_at')
-            ->where('city_id','=',$city_id)
-            ->orderBy('id','asc')
+            ->where('city_id', '=', $city_id)
+            ->orderBy('id', 'asc')
             ->get();
     }
     public function getListByCode($code)
@@ -29,10 +29,10 @@ class Zipcode
             return [];
         }
 
-        return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
+        return $this->builder->table('zipcodes')->select(['id', 'code', 'prefecture_id', 'prefecture_name', 'city_id', 'city_name', 'name'])
             ->whereNull('deleted_at')
-            ->where('code','=',str_replace("-","",$code))
-            ->orderBy('id','asc')
+            ->where('code', '=', str_replace("-", "", $code))
+            ->orderBy('id', 'asc')
             ->get();
     }
 }

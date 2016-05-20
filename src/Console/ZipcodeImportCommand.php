@@ -55,7 +55,7 @@ class ZipcodeImportCommand extends Command
 
         $data = $this->curl->to(self::URL)->get();
         $this->file->put(storage_path($path . '/ken_all.zip'), $data);
-        $zip_file = str_replace(base_path() . '/', '', storage_path( $path . '/ken_all.zip'));
+        $zip_file = str_replace(base_path() . '/', '', storage_path($path . '/ken_all.zip'));
         $extract_path = str_replace(base_path() . '/', '', storage_path($path));
 
         $zip = $this->zipper->make($zip_file);
@@ -73,12 +73,12 @@ class ZipcodeImportCommand extends Command
         $config_file = __DIR__ . '/zipcodes.yml';
         $this->import->setConfig($config_file);
 
-        if ( $this->option('add-prefecture') ) {
+        if ($this->option('add-prefecture')) {
             $prefecture_config_file = __DIR__ . '/prefectures.yml';
             $this->import->setPrefectureConfig($prefecture_config_file);
             $this->import->setIsPrefecture(true);
         }
-        if ( $this->option('add-city') ) {
+        if ($this->option('add-city')) {
             $city_config_file = __DIR__ . '/cities.yml';
             $this->import->setCityConfig($city_config_file);
             $this->import->setIsCity(true);
