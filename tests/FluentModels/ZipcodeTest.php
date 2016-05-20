@@ -14,8 +14,7 @@ class ZipcodeTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->builder = Mockery::mock('Illuminate\Database\Query\Builder');
-
+        $this->builder = Mockery::mock('Illuminate\Database\Connection');
     }
 
     public function testインスタンス()
@@ -29,11 +28,11 @@ class ZipcodeTest extends TestCase
         $obj = new Zipcode($this->builder);
         $this->assertTrue(is_array($obj->getListByCityId(null)));
 
-        $this->builder->shouldReceive('from')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('select')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('whereNull')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('where')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('orderBy')->once()->andReturn($this->builder);
+        $this->builder->shouldReceive('table')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('get')->once()->andReturn('1');
 
         $obj = new Zipcode($this->builder);
@@ -44,10 +43,10 @@ class ZipcodeTest extends TestCase
         $obj = new Zipcode($this->builder);
         $this->assertTrue(is_array($obj->getListByCityId(null)));
 
-        $this->builder->shouldReceive('from')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('select')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('whereNull')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('where')->once()->andReturn($this->builder);
+        $this->builder->shouldReceive('table')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('orderBy')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('get')->once()->andReturn('1');
 
