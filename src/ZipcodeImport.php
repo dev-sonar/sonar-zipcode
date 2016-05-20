@@ -16,7 +16,7 @@ class ZipcodeImport extends AbstractImport
     private $prefecture_import;
     private $city_import;
 
-    public function __construct(Zipcode $zipcode,PrefectureImport $prefecture_import,CityImport $city_import)
+    public function __construct(Zipcode $zipcode, PrefectureImport $prefecture_import, CityImport $city_import)
     {
         parent::__construct();
 
@@ -47,14 +47,14 @@ class ZipcodeImport extends AbstractImport
 
     public function csvRecord(array $csv)
     {
-        if (count($csv) <= 14 || is_numeric($csv[1]) === false ) {
+        if (count($csv) <= 14 || is_numeric($csv[1]) === false) {
             return;
         }
 
-        if ( $this->is_prefecture ) {
+        if ($this->is_prefecture) {
             $this->prefecture_import->csvRecord($csv);
         }
-        if ( $this->is_city ) {
+        if ($this->is_city) {
             $this->city_import->csvRecord($csv);
         }
 
@@ -71,28 +71,28 @@ class ZipcodeImport extends AbstractImport
     }
     public function setPrefectureId($model, $key, $csv, $col)
     {
-        $model->$key = substr(sprintf("%05d", $csv[$col-1]), 0, 2) + 0;
+        $model->$key = substr(sprintf("%05d", $csv[$col-1]), 0, 2)+0;
         return true;
     }
     public function setCityId($model, $key, $csv, $col)
     {
-        $model->$key = $csv[$col-1] + 0;
+        $model->$key = $csv[$col-1]+0;
         return true;
     }
     public function setName($model, $key, $csv, $col)
     {
         $val = $csv[$col-1];
-        if ( mb_strlen($val, 'utf-8')  > 50 ) {
+        if (mb_strlen($val, 'utf-8') > 50) {
             $model->$key = mb_substr($val, 0, mb_strpos($val, '（'));
         } else {
             $model->$key = $val;
         }
         return true;
     }
-    public function setKana($model,$key,$csv,$col)
+    public function setKana($model, $key, $csv, $col)
     {
-        $val = mb_convert_kana($csv[$col-1],'KV');
-        if ( mb_strlen($val,'utf-8')  > 100 ) {
+        $val = mb_convert_kana($csv[$col-1], 'KV');
+        if (mb_strlen($val, 'utf-8') > 100) {
             $model->$key = mb_substr($val, 0, mb_strpos($val, '（'));
         } else {
             $model->$key = $val;
