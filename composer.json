@@ -14,12 +14,6 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-       {
-        "type": "vcs",
-        "url" : "/var/www/laravel_packages/sources/laravel/packages/Sonar/Common/"
-        }
-    ],
     "require": {
         "illuminate/support": "~5.1",
         "illuminate/database": "~5.1",
@@ -50,7 +44,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "master": "1.0-dev"
         }
     }
 }
