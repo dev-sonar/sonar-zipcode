@@ -6,6 +6,7 @@ use Sonar\Zipcode\Test\TestCase;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Composer;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Database\Migrations\MigrationCreator;
 
 use Mockery;
 
@@ -21,11 +22,12 @@ class ZipcodeCityTableCommandTest extends TestCase
         parent::setUp();
         $this->composer = Mockery::mock(Composer::class);
         $this->filesystem = Mockery::mock(Filesystem::class);
+        $this->creator = Mockery::mock(MigrationCreator::class);
     }
 
     public function testInstance()
     {
-        $obj = new ZipcodeCityTableCommand($this->filesystem,$this->composer);
+        $obj = new ZipcodeCityTableCommand($this->filesystem,$this->composer,$this->creator);
         $this->assertTrue($obj instanceof ZipcodeCityTableCommand);
     }
 
@@ -34,8 +36,9 @@ class ZipcodeCityTableCommandTest extends TestCase
         $this->filesystem->shouldReceive('get');
         $this->filesystem->shouldReceive('put');
         $this->composer->shouldReceive('dumpAutoloads');
+        $this->creator->shouldReceive('create');
 
-        $obj = new ZipcodeCityTableCommand($this->filesystem,$this->composer);
+        $obj = new ZipcodeCityTableCommand($this->filesystem,$this->composer,$this->creator);
         $laravel = Mockery::mock(Application::class);
         $laravel->shouldReceive('databasePath')->andReturn('');
         $migration = Mockery::mock('migration');

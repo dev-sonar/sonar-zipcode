@@ -14,11 +14,5 @@ class Prefecture extends Model
 
     protected $tables = 'prefectures';
 
-
     protected $fillable = ['id','name','kana'];
-
-    public static function boot()
-    {
-        parent::boot();
-    }
 }

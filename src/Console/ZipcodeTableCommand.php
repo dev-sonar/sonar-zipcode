@@ -2,7 +2,8 @@
 
 namespace Sonar\Zipcode\Console;
 
-use Illuminate\Console\Command;
+use Illuminate\Database\Console\Migrations\BaseCommand as Command;
+use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Foundation\Composer;
 use Illuminate\Filesystem\Filesystem;
 
@@ -34,6 +35,12 @@ class ZipcodeTableCommand extends Command
      */
     protected $composer;
 
+
+    /**
+     * @var Illuminate\Database\Migrations\MigrationCreator
+     */
+    protected $creator;
+
     /**
      * Create a new session table command instance.
      *
@@ -41,12 +48,13 @@ class ZipcodeTableCommand extends Command
      * @param  \Illuminate\Foundation\Composer  $composer
      * @return void
      */
-    public function __construct(Filesystem $files, Composer $composer)
+    public function __construct(Filesystem $files, Composer $composer, MigrationCreator $creator)
     {
         parent::__construct();
 
         $this->files = $files;
         $this->composer = $composer;
+        $this->creator = $creator;
     }
 
     /**
@@ -72,8 +80,8 @@ class ZipcodeTableCommand extends Command
     {
         $name = 'create_zipcodes_table';
 
-        $path = $this->laravel->databasePath().'/migrations';
+        $path = $this->getMigrationPath();
 
-        return $this->laravel->offsetGet('migration.creator')->create($name, $path);
+        return $this->creator->create($name, $path);
     }
 }

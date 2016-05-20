@@ -16,9 +16,4 @@ class Zipcode extends Model
 
 
     protected $fillable = ['id','city_id','name','code','kana'];
-
-    public static function boot()
-    {
-        parent::boot();
-    }
 }

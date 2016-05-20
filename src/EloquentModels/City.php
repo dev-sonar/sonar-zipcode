@@ -16,9 +16,4 @@ class City extends Model
 
 
     protected $fillable = ['id','prefectuer_id','name','kana'];
-
-    public static function boot()
-    {
-        parent::boot();
-    }
 }
