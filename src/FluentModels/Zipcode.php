@@ -5,13 +5,17 @@ use Illuminate\Database\Connection;
 
 class Zipcode
 {
+    private $builder;
+
     public function __construct(Connection $builder)
     {
         $this->builder = $builder;
     }
     public function getListByCityId($city_id)
     {
-        if ( ! $city_id ) return [];
+        if ( ! $city_id) {
+            return [];
+        }
 
         return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
             ->whereNull('deleted_at')
@@ -21,7 +25,9 @@ class Zipcode
     }
     public function getListByCode($code)
     {
-        if ( ! $code ) return [];
+        if ( ! $code) {
+            return [];
+        }
 
         return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
             ->whereNull('deleted_at')
