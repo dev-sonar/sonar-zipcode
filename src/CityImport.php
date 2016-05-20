@@ -10,6 +10,8 @@ class CityImport extends AbstractImport
 {
     use CsvReaderTrait;
 
+    private $city;
+
     public function __construct(City $city)
     {
         parent::__construct();
@@ -18,8 +20,8 @@ class CityImport extends AbstractImport
 
     public function csvRecord(array $csv)
     {
-        if ( count($csv) <= 14 ) return;
-        if ( is_numeric($csv[0]) === false ) return;
+        if (count($csv) <= 14) return;
+        if (is_numeric($csv[0]) === false) return;
 
         $model = $this->city->findOrNew(trim($csv[0])+0);
         $models = [
@@ -27,40 +29,42 @@ class CityImport extends AbstractImport
                 $model,
             ]
         ];
-        $this->setModels($models,$csv);
+        $this->setModels($models, $csv);
         unset($models);
 
         return true;
     }
-    public function setPrefectureId($model,$key,$csv,$col)
+
+    public function setPrefectureId($model, $key, $csv, $col)
     {
-        $model->$key = substr(sprintf("%05d",$csv[$col-1]),0,2) + 0;
+        $model->$key = substr(sprintf("%05d", $csv[$col-1]), 0, 2) + 0;
         return true;
     }
-    public function setCityId($model,$key,$csv,$col)
+
+    public function setCityId($model, $key, $csv, $col)
     {
         $model->$key = $csv[$col-1] + 0;
         return true;
     }
-    public function setName($model,$key,$csv,$col)
+    public function setName($model, $key, $csv, $col)
     {
         $val = $csv[$col-1];
-        if ( mb_strlen($val,'utf-8')  > 50 ) {
-            $model->$key = mb_substr($val,0,mb_strpos($val,'（'));
-        } else {
-            $model->$key = $val;
-        }
+        $this->setLengthValue($model, $key, $val, 50);
         return true;
     }
-    public function setKana($model,$key,$csv,$col)
+    public function setKana($model, $key, $csv, $col)
     {
         $val = mb_convert_kana($csv[$col-1],'KV');
-        if ( mb_strlen($val,'utf-8')  > 100 ) {
-            $model->$key = mb_substr($val,0,mb_strpos($val,'（'));
+        $this->setLengthValue($model, $key, $val, 100);
+        return true;
+    }
+    private function setLengthValue($model, $key, $val, $length)
+    {
+        if (mb_strlen($val,'utf-8')  > $length) {
+            $model->$key = mb_substr($val, 0, mb_strpos($val, '（'));
         } else {
             $model->$key = $val;
         }
-        return true;
     }
 
 }

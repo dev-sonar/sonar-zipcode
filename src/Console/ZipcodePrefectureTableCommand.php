@@ -60,8 +60,6 @@ class ZipcodePrefectureTableCommand extends Command
 
         $this->files->put($fullPath, $this->files->get(__DIR__.'/stubs/prefectures.stub'));
 
-//        $this->info('Migration created successfully!');
-
         $this->composer->dumpAutoloads();
     }
 

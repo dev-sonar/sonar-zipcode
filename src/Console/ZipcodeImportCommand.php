@@ -23,9 +23,6 @@ class ZipcodeImportCommand extends Command
      * @var string
      */
     protected $signature = 'zipcode:import {--add-prefecture : add import prefecture table.} {--add-city : add import city table.}';
-//    protected $name = 'zipcode:import';
-
-
 
     /**
      * The console command description.
@@ -35,9 +32,13 @@ class ZipcodeImportCommand extends Command
     protected $description = 'import zipcode table from csv data';
 
     protected $import;
-    protected $trasfer;
+    protected $transfer;
 
-    public function __construct(ZipcodeImport $import,ZipcodeTransfer $transfer,Zipper $zipper,Curl $curl,Filesystem $file)
+    private $zipper;
+    private $curl;
+    private $file;
+
+    public function __construct(ZipcodeImport $import, ZipcodeTransfer $transfer, Zipper $zipper, Curl $curl, Filesystem $file)
     {
         parent::__construct();
 
@@ -53,9 +54,9 @@ class ZipcodeImportCommand extends Command
         $path = 'app/sonar_zipcode';
 
         $data = $this->curl->to(self::URL)->get();
-        $this->file->put(storage_path($path . '/ken_all.zip'),$data);
-        $zip_file = str_replace(base_path() . '/' ,'',storage_path( $path . '/ken_all.zip'));
-        $extract_path = str_replace(base_path() . '/' ,'',storage_path($path));
+        $this->file->put(storage_path($path . '/ken_all.zip'), $data);
+        $zip_file = str_replace(base_path() . '/', '', storage_path( $path . '/ken_all.zip'));
+        $extract_path = str_replace(base_path() . '/', '', storage_path($path));
 
         $zip = $this->zipper->make($zip_file);
         $zip->extractTo($extract_path . "/");
@@ -63,11 +64,11 @@ class ZipcodeImportCommand extends Command
 
         $this->file->put(
             storage_path($path . '/ken_all.csv.utf8'),
-            mb_convert_encoding($this->file->get(storage_path($path . '/KEN_ALL.CSV')),'utf8','cp932')
+            mb_convert_encoding($this->file->get(storage_path($path . '/KEN_ALL.CSV')), 'utf8', 'cp932')
         );
 
         $this->transfer->csvRead(storage_path($path . '/ken_all.csv.utf8'));
-        $this->file->put(storage_path($path . '/ken_all.csv.new'),$this->transfer->getData());
+        $this->file->put(storage_path($path . '/ken_all.csv.new'), $this->transfer->getData());
 
         $config_file = __DIR__ . '/zipcodes.yml';
         $this->import->setConfig($config_file);
@@ -85,13 +86,4 @@ class ZipcodeImportCommand extends Command
 
         $this->import->csvRead(storage_path($path . '/ken_all.csv.new'));
     }
-/*
-    public function getOptions()
-    {
-        return [
-                ['add-prefecture', null, InputOption::VALUE_OPTIONAL, 'add import prefecture table.', null],
-                ['add-city', null, InputOption::VALUE_OPTIONAL, 'add import city table.', null],
-        ];
-    }
-*/
 }

@@ -60,8 +60,6 @@ class ZipcodeCityTableCommand extends Command
 
         $this->files->put($fullPath, $this->files->get(__DIR__.'/stubs/cities.stub'));
 
-//        $this->info('Migration created successfully!');
-
         $this->composer->dumpAutoloads();
     }
 
