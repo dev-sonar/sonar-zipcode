@@ -46,7 +46,7 @@ class ZipcodeCityTableCommand extends Command
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
      * @param  \Illuminate\Foundation\Composer  $composer
-     * @return void
+     * @param Illuminate\Database\Migrations\MigrationCreator $creator
      */
     public function __construct(Filesystem $files, Composer $composer,MigrationCreator $creator)
     {
@@ -60,7 +60,6 @@ class ZipcodeCityTableCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
      */
     public function fire()
     {

@@ -82,21 +82,21 @@ class ZipcodeImport extends AbstractImport
     public function setName($model, $key, $csv, $col)
     {
         $val = $csv[$col-1];
-        if ( mb_strlen($val, 'utf-8')  > 50 ) {
-            $model->$key = mb_substr($val, 0, mb_strpos($val, '（'));
-        } else {
-            $model->$key = $val;
-        }
+        $this->setLengthValue($model, $key, $val, 50);
         return true;
     }
     public function setKana($model,$key,$csv,$col)
     {
         $val = mb_convert_kana($csv[$col-1],'KV');
-        if ( mb_strlen($val,'utf-8')  > 100 ) {
+        $this->setLengthValue($model, $key, $val, 100);
+        return true;
+    }
+    private function setLengthValue($model, $key, $val, $length)
+    {
+        if (mb_strlen($val,'utf-8')  > $length) {
             $model->$key = mb_substr($val, 0, mb_strpos($val, '（'));
         } else {
             $model->$key = $val;
         }
-        return true;
     }
 }

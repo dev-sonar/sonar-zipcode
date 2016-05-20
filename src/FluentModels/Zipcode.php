@@ -13,26 +13,24 @@ class Zipcode
     }
     public function getListByCityId($city_id)
     {
-        if ( ! $city_id) {
-            return [];
+        if ( $city_id) {
+            return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
+                ->whereNull('deleted_at')
+                ->where('city_id','=',$city_id)
+                ->orderBy('id','asc')
+                ->get();
         }
-
-        return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
-            ->whereNull('deleted_at')
-            ->where('city_id','=',$city_id)
-            ->orderBy('id','asc')
-            ->get();
+        return [];
     }
     public function getListByCode($code)
     {
-        if ( ! $code) {
-            return [];
+        if ( $code) {
+            return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
+                ->whereNull('deleted_at')
+                ->where('code','=',str_replace("-","",$code))
+                ->orderBy('id','asc')
+                ->get();
         }
-
-        return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
-            ->whereNull('deleted_at')
-            ->where('code','=',str_replace("-","",$code))
-            ->orderBy('id','asc')
-            ->get();
+        return [];
     }
 }
