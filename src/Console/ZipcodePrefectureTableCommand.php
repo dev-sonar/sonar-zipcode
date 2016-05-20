@@ -36,7 +36,7 @@ class ZipcodePrefectureTableCommand extends Command
     protected $composer;
 
     /**
-      * @var Illuminate\Database\Migrations\MigrationCreator
+      * @var \Illuminate\Database\Migrations\MigrationCreator
       */
     protected $creator;
 
@@ -45,7 +45,7 @@ class ZipcodePrefectureTableCommand extends Command
      *
      * @param  \Illuminate\Filesystem\Filesystem  $files
      * @param  \Illuminate\Foundation\Composer  $composer
-     * @param Illuminate\Database\Migrations\MigrationCreator $creator
+     * @param  \Illuminate\Database\Migrations\MigrationCreator $creator
      *
      */
     public function __construct(Filesystem $files, Composer $composer,MigrationCreator $creator)

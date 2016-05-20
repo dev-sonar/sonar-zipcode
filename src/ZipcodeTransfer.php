@@ -31,8 +31,11 @@ class ZipcodeTransfer
                     $this->counter = 0;
                 }
             } else {
-                if ( $csv[8] != $prev_csv[8] ) $csv[8] = $prev_csv[8] . $csv[8];
-                if ( $csv[5] != $prev_csv[5] ) $csv[5] = $prev_csv[5] . $csv[5];
+                foreach([5,8] as $num ) {
+                    if ( $csv[$num] != $prev_csv[$num] ) {
+                        $csv[$num] = $prev_csv[$num] . $csv[$num];
+                    }
+                }
             }
         }
         $this->prev_csv = $csv;

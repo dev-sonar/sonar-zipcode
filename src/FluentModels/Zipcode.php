@@ -14,10 +14,8 @@ class Zipcode
     public function getListByCityId($city_id)
     {
         if ( $city_id) {
-            return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
-                ->whereNull('deleted_at')
+            return $this->getListBuilder()
                 ->where('city_id','=',$city_id)
-                ->orderBy('id','asc')
                 ->get();
         }
         return [];
@@ -25,12 +23,16 @@ class Zipcode
     public function getListByCode($code)
     {
         if ( $code) {
-            return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
-                ->whereNull('deleted_at')
+            return $this->getListBuilder()
                 ->where('code','=',str_replace("-","",$code))
-                ->orderBy('id','asc')
                 ->get();
         }
         return [];
+    }
+    private function getListBuilder()
+    {
+        return $this->builder->table('zipcodes')->select(['id','code','prefecture_id','prefecture_name','city_id','city_name','name'])
+            ->whereNull('deleted_at')
+            ->orderBy('id','asc');
     }
 }

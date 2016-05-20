@@ -59,6 +59,25 @@ class ZipcodeImportTest extends TestCase
         $this->assertNull($obj->setIsCity(true));
         $this->assertTrue($obj->csvRecord($csv));
     }
+    public function testCsvRecord2()
+    {
+        $zipcode = $this->zipcode;
+        $zipcode->shouldReceive('findOrNew')->andReturn($zipcode);
+        $zipcode->shouldReceive('setAttribute');
+        $zipcode->shouldReceive('save');
+        $prefecture_import = $this->prefecture_import;
+        $city_import = $this->city_import;
+
+        $prefecture_import->shouldReceive('csvRecord');
+        $city_import->shouldReceive('csvRecord');
+
+
+        $obj = new ZipcodeImport($zipcode,$prefecture_import,$city_import);
+        $obj->setConfig(__DIR__ . '/../src/Console/zipcodes.yml');
+        $csv = [ '1', '2', '3', '4'];
+        $this->assertNull($obj->csvRecord($csv));
+    }
+
     public function testSetName()
     {
         $zipcode = $this->zipcode;
