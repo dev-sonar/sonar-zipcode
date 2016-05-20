@@ -41,7 +41,7 @@ class ZipcodeTest extends TestCase
     public function testgetListByCode()
     {
         $obj = new Zipcode($this->builder);
-        $this->assertTrue(is_array($obj->getListByCityCode(null)));
+        $this->assertTrue(is_array($obj->getListByCode(null)));
 
         $this->builder->shouldReceive('select')->once()->andReturn($this->builder);
         $this->builder->shouldReceive('whereNull')->once()->andReturn($this->builder);
