@@ -20,21 +20,20 @@ class ZipcodeTransfer
 
     public function csvRecord(array $csv)
     {
-        if ( isset($this->prev_csv) ) {
-            $prev_csv = $this->prev_csv;
-            if ( $prev_csv[2] != $csv[2] || $csv[12] != '1' ) {
-                $prev_csv[1] = sprintf("%07s%02d",$prev_csv[2],$this->counter);
-                $this->data .= implode(",",$prev_csv) . "\n";
-                if ( $prev_csv[2] == $csv[2] ) {
-                    $this->counter ++;
-                } else {
-                    $this->counter = 0;
-                }
-            } else {
-                foreach([5,8] as $num ) {
-                    if ( $csv[$num] != $prev_csv[$num] ) {
-                        $csv[$num] = $prev_csv[$num] . $csv[$num];
-                    }
+        if ( isset($this->prev_csv) === false ) {
+            $this->prev_csv = $csv;
+            return;
+        } 
+        $prev_csv = $this->prev_csv;
+        if ( $prev_csv[2] != $csv[2] ) {
+            $counter = $this->counter;
+            $prev_csv[1] = sprintf("%07s%02d",$prev_csv[2],$counter);
+            $this->data .= implode(",",$prev_csv) . "\n";
+            $this->counter = ( $prev_csv[2] == $csv[2] ) ? $counter + 1 : 0;
+        } else {
+            foreach([5,8] as $num ) {
+                if ( $csv[$num] != $prev_csv[$num] ) {
+                    $csv[$num] = $prev_csv[$num] . $csv[$num];
                 }
             }
         }
